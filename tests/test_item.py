@@ -28,6 +28,16 @@ def test_name(items):
     assert items['second test'].name == 'Laptop'
 
 
+def test_str(items):
+    assert str(items['first test']) == 'Phone'
+    assert str(items['second test']) == 'Laptop'
+
+
+def test_repr(items):
+    assert repr(items['first test']) == "Item('Phone', 10000, 10)"
+    assert repr(items['second test']) == "Item('Laptop', 40000, 3)"
+
+
 def test_instantiate():
     os.chdir('..')
     Item.instantiate_from_csv('src/items.csv')
@@ -39,3 +49,6 @@ def test_instantiate():
 def test_string_to_number():
     assert Item.string_to_number('0') == 0
     assert Item.string_to_number('1000') == 1000
+
+
+
