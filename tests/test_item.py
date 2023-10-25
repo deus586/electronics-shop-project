@@ -2,13 +2,15 @@
 import pytest
 import os
 from src.item import Item
+from src.phone import Phone
 
 
 @pytest.fixture
 def items():
     item1 = Item('Phone', 10000, 10)
     item2 = Item('Laptop', 40000, 3)
-    return {'first test': item1, 'second test': item2}
+    phone1 = Phone('Phone', 100000, 10, 3)
+    return {'first test': item1, 'second test': item2, 'phone test': phone1}
 
 
 def test_total_price(items):
@@ -51,4 +53,21 @@ def test_string_to_number():
     assert Item.string_to_number('1000') == 1000
 
 
+def test_phone(items):
 
+    phone1 = items['phone test']
+    assert phone1.name == 'Phone'
+    assert phone1.number_of_sim == 3
+
+
+def test_add(items):
+    item = items['first test']
+    phone = items['phone test']
+
+    assert item + phone == 20
+    assert phone + item == 20
+    try:
+        assert item + 10 == 20
+        assert phone + 10 == 20
+    except:
+        print('TypeError')
