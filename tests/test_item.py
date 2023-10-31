@@ -1,7 +1,7 @@
 """Здесь надо написать тесты с использованием pytest для модуля item."""
 import pytest
 import os
-from src.item import Item
+from src.item import Item, InstantiateCSVError
 from src.phone import Phone
 
 
@@ -71,3 +71,12 @@ def test_add(items):
         assert phone + 10 == 20
     except:
         print('TypeError')
+
+
+def test_exc():
+    with pytest.raises(FileNotFoundError, match='Файл не найден'):
+        Item.instantiate_from_csv('some_csv.csv')
+        # Проверка корректноссти регистра
+        Item.instantiate_from_csv('ITEMS.csv')
+    with pytest.raises(InstantiateCSVError, match='Файл повреждён'):
+        Item.instantiate_from_csv('src/without_last_column.csv')
